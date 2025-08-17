@@ -32,11 +32,15 @@ button {
 	transition-duration: 0.3s;
 	margin: 0.3rem;
 	user-select:none !important;
+	/* touch-friendly */
+	min-width: 3.4rem;
+	min-height: 3.4rem;
+	font-size: 1rem;
 }
 
 button:hover {
-	padding: 1.3rem;
-	margin: 0;
+	/* avoid changing padding (causes layout shift); use transform instead */
+	transform: scale(1.05);
 }
 
 #navbar {
@@ -80,6 +84,64 @@ button:hover {
 	align-items: center;
 }
 
+/* Responsive: stack containers on small screens and enlarge buttons/modals */
+@media (max-width: 900px) {
+	#canvasContainer, #wordBankContainer {
+		width: calc(100% - 2rem);
+		float: none;
+		margin: 1rem auto;
+	}
+
+	button {
+		padding: 1.2rem 1.6rem;
+		min-width: 4.2rem;
+		min-height: 4.2rem;
+		font-size: 3.05rem;
+	}
+
+	.navbarButton {
+		padding: 0.9rem;
+		font-size: 1.2rem;
+	}
+
+	.wordCard {
+		padding: 0.8rem;
+	}
+
+	#topControls-inner button, #topControls-outer button {
+		font-size: 1.4rem;
+		padding: 1rem 1.2rem;
+		min-width: 4.6rem;
+		min-height: 4.6rem;
+	}
+}
+
+@media (max-width: 480px) {
+	button {
+		padding: 1.4rem 1.8rem;
+		min-width: 4.8rem;
+		min-height: 4.8rem;
+		font-size: 3.1rem;
+	}
+
+	.navbarButton {
+		padding: 0.8rem;
+		font-size: 1rem;
+	}
+
+	#topControls-inner {
+		gap: 0.4rem;
+		flex-wrap: wrap;
+	}
+
+	#topControls-inner button, #topControls-outer button {
+		font-size: 1.6rem;
+		padding: 1.2rem 1.6rem;
+		min-width: 5.2rem;
+		min-height: 5.2rem;
+	}
+}
+
 #canvas {
 	margin-left: auto;
 	margin-right: auto;
@@ -98,6 +160,13 @@ button:hover {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+/* Make the top control buttons (zoom, page, mode) more prominent */
+#topControls-inner button, #topControls-outer button {
+	font-size: 1.8rem;
+	padding: 0.8rem 1rem;
+	line-height: 1;
 }
 
 #overlayBox {
