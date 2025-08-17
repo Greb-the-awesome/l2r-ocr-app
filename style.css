@@ -1,0 +1,107 @@
+* {
+	margin: 0;
+}
+
+body {
+	background-color: #282a30;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
+	color: #f5e7df;
+	font-family: "Open Sans", "Calibri", "sans-serif";
+}
+
+a {
+	text-decoration: underline;
+	color: #ff6100;
+}
+
+button {
+	background-color: #534e4b;
+	color: #f5e7df;
+	border: none;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	transition-duration: 0.3s;
+	margin: 0.3rem;
+	user-select:none !important;
+}
+
+button:hover {
+	padding: 1.3rem;
+	margin: 0;
+}
+
+#navbar {
+	background-color: #010244;
+	padding: 0.5rem;
+}
+
+.navbarButton {
+	padding: 1rem;
+	text-decoration: none;
+	color: white;
+	font-size: 1.5rem;
+	background-color: #001d6e;
+	display: inline-block;
+	margin: 0.5rem;
+}
+
+.navbarButton-selected {
+	font-weight: bolder;
+}
+
+#canvasContainer, #wordBankContainer {
+	border-radius: 1rem;
+	background-color: #001d6e;
+	width: 45%;
+	float: left;
+	margin: 1rem;
+}
+
+#wordBankContainer {
+	padding: 1rem;
+}
+
+.wordCard {
+	background-color: #282a30;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	margin: 0.5rem 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#canvas {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 1rem;
+	display: block;
+	background-color: black;
+}
+
+#topControls-outer {
+	border-radius: 1rem;
+	background-color: black;
+	padding: 0.5rem;
+}
+
+#topControls-inner {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#overlayBox {
+	position: fixed;
+	display: none;
+	border: 3px solid red;
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Teko:wght@300..700&display=swap"
+		rel="stylesheet">
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.54/pdf.min.mjs" type="module/javascript"></script> -->
+	<!-- v5 -->
+	<script type="module"> import pdfjsDist from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.54/+esm'
+	</script>
+	<script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+	<!-- gl-matrix and tesseract.js are now imported as ES modules in script.js -->
+	<!-- not tesseract -->
+
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<div id="navbar">
+		<a class="navbarButton navbarButton-selected" onclick="changeTab(0)">Reader</a>
+		<a class="navbarButton" onclick="changeTab(1)">Word Bank</a>
+	</div>
+	<br><br>
+	<div class="viewerTab">
+		<div id="canvasContainer" style="width: 100vw; max-width: 100vw; box-sizing: border-box;">
+			<!-- Drag and drop modal -->
+			<div id="dragDropModal"
+				style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center; pointer-events:none;">
+				<div
+					style="background:white; color:#222; font-size:2em; padding:2em 3em; border-radius:1em; box-shadow:0 2px 16px #0003; font-family:'Teko', 'Open Sans', sans-serif; text-align:center;">
+					Drag and drop PDF here</div>
+			</div>
+			<div id="overlayBox"></div>
+			<div id="topControls-outer">
+				<div id="topControls-inner">
+					<button tabindex="-1" id="prevPage">&larr;</button>
+					<button tabindex="-1" id="zoomOut">-</button>
+					<button tabindex="-1" id="zoomIn">+</button>
+					<button tabindex="-1" id="modeToggle">&#129306;</button>
+					<button tabindex="-1" id="nextPage">&rarr;</button>
+					<label for="pdfUpload"
+						style="margin-left:1em; cursor:pointer; background:#eee; border-radius:4px; padding:0.3em 0.8em; font-family:'Open Sans',sans-serif; font-size:1em; border:1px solid #ccc;">Upload
+						PDF
+						<input type="file" id="pdfUpload" accept="application/pdf" style="display:none;">
+					</label>
+				</div>
+			</div>
+			<canvas id="canvas" style="width: 100%; height: 80vh; display: block;"></canvas>
+
+			<!-- Drag and drop PDF functionality -->
+			<script>
+				window.addEventListener('DOMContentLoaded', function () {
+					const canvasContainer = document.getElementById('canvasContainer');
+					const canvas = document.getElementById('canvas');
+					function resizeCanvas() {
+						canvas.width = canvas.offsetWidth;
+						canvas.height = canvas.offsetHeight;
+					}
+					resizeCanvas();
+					window.addEventListener('resize', resizeCanvas);
+
+					canvasContainer.addEventListener('dragover', function (e) {
+						e.preventDefault();
+						canvasContainer.style.background = '#e0e0e0';
+					});
+
+					canvasContainer.addEventListener('dragleave', function (e) {
+						canvasContainer.style.background = '';
+					});
+
+					canvasContainer.addEventListener('drop', function (e) {
+						e.preventDefault();
+						canvasContainer.style.background = '';
+						const files = e.dataTransfer.files;
+						console.log(files);
+						if (files.length > 0 && files[0].type === 'application/pdf') {
+							// Call loadPdf with the dropped file
+							if (window.loadPdf) {
+								window.loadPdf(files[0]);
+							}
+						}
+					});
+				});
+			</script>
+		</div>
+	</div>
+	<div class="viewerTab" style="display:none;">
+		<div id="wordBankContainer">
+			<h2>Word Bank</h2>
+			<p id="bankEmptyPlaceholder">Words will appear here as you add them from the OCR modal.</p>
+			<!-- <div class="wordCard">
+				<p style="color: white; font-size: 1.2em; font-weight: bold; margin: 0;">[word]</p>
+				<button>&#x274C;</button>
+			</div> -->
+		</div>
+	</div>
+	<script type="module" src="./script.mjs"></script>
+
+	<script>
+		window.addEventListener('DOMContentLoaded', function () {
+			const pdfUpload = document.getElementById('pdfUpload');
+			if (pdfUpload) {
+				pdfUpload.addEventListener('change', function (e) {
+					const file = e.target.files[0];
+					if (file && window.loadPdf) {
+						window.loadPdf(file);
+					}
+				});
+			}
+		});
+	</script>
+
+	<script>
+		window.addEventListener('DOMContentLoaded', function () {
+			const canvasContainer = document.getElementById('canvasContainer');
+			const dragDropModal = document.getElementById('dragDropModal');
+
+			canvasContainer.addEventListener('dragover', function (e) {
+				e.preventDefault();
+				dragDropModal.style.display = 'flex';
+			});
+
+			canvasContainer.addEventListener('dragleave', function (e) {
+				dragDropModal.style.display = 'none';
+			});
+
+			canvasContainer.addEventListener('drop', function (e) {
+				e.preventDefault();
+				dragDropModal.style.display = 'none';
+				const files = e.dataTransfer.files;
+				if (files.length > 0 && files[0].type === 'application/pdf') {
+					if (window.loadPdf) {
+						window.loadPdf(files[0]);
+					}
+				}
+			});
+		});
+	</script>
+	<!-- OCR Modal -->
+	<div id="ocrModal"
+		style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:2000; align-items:center; justify-content:center;">
+		<div
+			style="background:white; color:#222; font-size:1.5em; padding:2em 3em; border-radius:1em; box-shadow:0 2px 16px #0003; font-family:'Teko', 'Open Sans', sans-serif; text-align:center; min-width:300px;">
+			<div id="ocrModalText" style="margin-bottom:1em;"></div>
+			<button id="addToWordBankBtn"
+				style="color: black;font-size:1em; padding:0.5em 1.2em; border-radius:0.5em; background:#eee; border:1px solid #ccc; cursor:pointer;">Add
+				to word bank</button>
+
+			<br><br>
+			<button id="speakWordBtn"
+				style="color: black;font-size:1em; padding:0.5em 1.2em; border-radius:0.5em; background:#eee; border:1px solid #ccc; cursor:pointer;">Speak out loud</button>
+			<br><br>
+			<button id="closeOcrModalBtn"
+				style="color: black;font-size:0.9em; padding:0.3em 0.8em; border-radius:0.5em; background:#eee; border:1px solid #ccc; cursor:pointer;">Close</button>
+		</div>
+	</div>
+</body>
+
+</html>
