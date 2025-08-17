@@ -2,7 +2,8 @@
 <html>
 
 <head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link
@@ -140,6 +141,104 @@
 			});
 		});
 	</script>
+	<br><br><br><br><br><br>
+	<div class="promptsBox">
+		<p>Not interested? Paste these prompts into an AI and see what happens!</p>
+		<button id="prevPrompt">&#x25C0;</button>
+		<p id="actualPrompt">Write a short story about a science experiment accidentally brings a leftover slice of
+			pizza to life—and it demands respect as “King Crusty.”</p>
+		<button id="nextPrompt">&#x25B6;</button>
+	</div>
+	<script>
+		window.addEventListener('DOMContentLoaded', function () {
+			const prompts = [
+				"Write a story about a science experiment that accidentally brings a leftover slice of pizza to life—and it demands respect as 'King Crusty.'",
+				"Write a story about a kid’s dog that learns how to text…and starts roasting the family group chat.",
+				"Write a story about the school vending machine declaring itself Principal and enforcing 'Snack Law.'",
+				"Write a story about two best friends who invent a time machine out of a porta-potty…and it works.",
+				"Write a story about a math test that grows arms and legs and starts chasing the students who failed it.",
+				"Write a story about a talking hamster that gets elected class president but refuses to do homework.",
+				"Write a story about a kid’s video game character that escapes the screen and raids the fridge.",
+				"Write a story about a school janitor who discovers the mop bucket is actually an alien in disguise.",
+				"Write a story about a fart so powerful it breaks the sound barrier and attracts government agents.",
+				"Write a story about the cafeteria menu coming alive and demanding everyone eat broccoli forever.",
+				"Write a story about a kid who invents 'anti-gravity shoes' but can’t figure out how to turn them off.",
+				"Write a story about a substitute teacher who is secretly a zombie…but still grades fairly.",
+				"Write a story about a spelling bee gone wrong when the words start spelling themselves.",
+				"Write a story about a kid who sneezes so hard, he swaps bodies with the class goldfish.",
+				"Write a story about the principal getting stuck inside the school PA system and refusing to stop singing.",
+				"Write a story about a diary that writes back—and it’s extremely sarcastic.",
+				"Write a story about a kid’s sandwich that grows teeth and joins the football team.",
+				"Write a story about the school bus developing feelings and refusing to go near homework.",
+				"Write a story about a skateboard that becomes self-aware and starts pulling pranks on pedestrians.",
+				"Write a story about a locker that eats backpacks and burps out embarrassing secrets.",
+				"Write a story about a kid who invents a clone machine—but it only clones his boogers.",
+				"Write a story about a pair of socks that runs away and starts a sock revolution in the laundry room.",
+				"Write a story about a haunted pencil that won’t stop doodling embarrassing cartoons of its owner.",
+				"Write a story about the gym teacher who gets superpowers but only when eating nachos.",
+				"Write a story about a sneeze that turns into a tiny monster and refuses to be caught.",
+				"Write a story about a kid who invents 'instant homework spray' but it has ridiculous side effects.",
+				"Write a story about the school mascot coming to life and insisting on living in the cafeteria.",
+				"Write a story about a backpack that develops a personality and starts giving terrible life advice.",
+				"Write a story about a swarm of mosquitoes that organizes themselves into a marching band.",
+				"Write a story about a kid’s dream leaking into real life…and now the principal is a giant donut.",
+				"Write a story about shoes that suddenly start arguing about which one smells worse.",
+				"Write a story about a grandma who joins TikTok and instantly becomes more famous than you.",
+				"Write a story about sneezes that make random farm animals appear nearby.",
+				"Write a story about the school Wi-Fi coming alive and demanding snacks to keep working.",
+				"Write a story about a shadow that quits and starts living a cooler life than its owner.",
+				"Write a story about Detective Pickle: the world’s worst detective, who slips on himself constantly.",
+				"Write a story about Captain Awkward, a superhero whose only power is saying the wrong thing at the wrong time.",
+				"Write a story about a dragon who’s allergic to fire and keeps sneezing out water balloons.",
+				"Write a story about a magician whose tricks always backfire—like pulling out rabbits that insult him.",
+				"Write a story about a ghost who only haunts bathrooms and is obsessed with singing opera.",
+				"Write a story about a fire drill where the alarm gets stage fright and refuses to go off.",
+				"Write a story about art teacher’s paintbrushes that unionize and go on strike.",
+				"Write a story about the class hamster escaping—and coming back with an army of squirrels.",
+				"Write a story about every backpack in school deciding to walk out in protest.",
+				"Write a story about the principal banning pencils, forcing everyone to write essays with ketchup packets.",
+				"Write a story about a hoverboard that only hovers three inches—and screams.",
+				"Write a story about a hot dog eating contest where the hot dogs start fighting back.",
+				"Write a story about a treasure map that only leads to your neighbor’s stinky gym socks.",
+				"Write a story about a magic word that works—but only on vending machines.",
+				"Write a story about a robot built to do chores that keeps giving itself snack breaks.",
+				"Write a story about waking up with your head replaced by a balloon that keeps floating away.",
+				"Write a story about waking up with spaghetti noodles instead of hair.",
+				"Write a story about the family cat turning into your math teacher overnight.",
+				"Write a story about your left hand developing a brain of its own and insisting on slapping people.",
+				"Write a story about mirrors that only show embarrassing versions of you.",
+				"Write a story about an alien invasion that is stopped by a dodgeball game.",
+				"Write a story about a birthday cake that explodes into frosting fireworks.",
+				"Write a story about a wormhole that opens in the cafeteria fridge, sucking in all the chocolate milk.",
+				"Write a story about joining a band where every instrument is made of food.",
+				"Write a story about the moon calling you on the phone and asking to borrow your bike."
+			];
+
+			let currentPromptIndex = 0;
+
+			const actualPrompt = document.getElementById('actualPrompt');
+			const prevPromptBtn = document.getElementById('prevPrompt');
+			const nextPromptBtn = document.getElementById('nextPrompt');
+
+			function updatePrompt() {
+				actualPrompt.textContent = prompts[currentPromptIndex];
+			}
+
+			prevPromptBtn.addEventListener('click', function () {
+				currentPromptIndex--;
+				currentPromptIndex = (currentPromptIndex + prompts.length) % prompts.length;
+				updatePrompt();
+			});
+
+			nextPromptBtn.addEventListener('click', function () {
+				currentPromptIndex++;
+				currentPromptIndex = currentPromptIndex % prompts.length;
+				updatePrompt();
+			});
+
+			updatePrompt();
+		});
+	</script>
 	<!-- OCR Modal -->
 	<div id="ocrModal"
 		style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:2000; align-items:center; justify-content:center;">
@@ -152,7 +251,8 @@
 
 			<br><br>
 			<button id="speakWordBtn"
-				style="color: black;font-size:1em; padding:0.5em 1.2em; border-radius:0.5em; background:#eee; border:1px solid #ccc; cursor:pointer;">Speak out loud</button>
+				style="color: black;font-size:1em; padding:0.5em 1.2em; border-radius:0.5em; background:#eee; border:1px solid #ccc; cursor:pointer;">Speak
+				out loud</button>
 			<br><br>
 			<button id="closeOcrModalBtn"
 				style="color: black;font-size:0.9em; padding:0.3em 0.8em; border-radius:0.5em; background:#eee; border:1px solid #ccc; cursor:pointer;">Close</button>

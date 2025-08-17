@@ -150,6 +150,39 @@ button:hover {
 	background-color: black;
 }
 
+.promptsBox {
+	background-color: black;
+	color: #f5e7df;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	margin: 1rem auto;
+	width: 80%;
+	text-align: center;
+	font-size: 1.2rem;
+}
+
+#prevPrompt, #nextPrompt {
+	background-color: #534e4b;
+	color: #f5e7df;
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition-duration: 0.3s;
+	margin: 0.5rem;
+	display: inline-block;
+}
+
+#actualPrompt {
+	display: inline-block;
+	margin: 0 1rem;
+	font-size: 1.2rem;
+	max-width: 400px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
 #topControls-outer {
 	border-radius: 1rem;
 	background-color: black;
